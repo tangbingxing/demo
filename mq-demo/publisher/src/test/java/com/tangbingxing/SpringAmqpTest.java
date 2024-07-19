@@ -54,4 +54,15 @@ public class SpringAmqpTest {
         String message = "hello, everyone!";
         rabbitTemplate.convertAndSend(exchangeName, "", message);
     }
+
+    //路由模式
+    @Test
+    public void testSendDirectExchange() {
+        // 交换机名称
+        String exchangeName = "tangbingxing.direct";
+        // 消息
+        String message = "红色警报！日本乱排核废水，导致海洋生物变异，惊现哥斯拉！";
+        // 发送消息
+        rabbitTemplate.convertAndSend(exchangeName, "red", message);
+    }
 }
