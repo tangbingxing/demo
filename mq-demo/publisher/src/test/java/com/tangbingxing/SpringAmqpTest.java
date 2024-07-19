@@ -30,4 +30,18 @@ public class SpringAmqpTest {
         // 发送消息
         rabbitTemplate.convertAndSend(queueName, message);
     }
+
+    //工作队列，模拟消息堆积
+    @Test
+    public void testWorkQueue() throws InterruptedException {
+        // 队列名称
+        String queueName = "simple.queue";
+        // 消息
+        String message = "hello, message_";
+        for (int i = 0; i < 50; i++) {
+            // 发送消息
+            rabbitTemplate.convertAndSend(queueName, message + i);
+            Thread.sleep(20);
+        }
+    }
 }
