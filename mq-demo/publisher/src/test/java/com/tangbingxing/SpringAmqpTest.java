@@ -44,4 +44,14 @@ public class SpringAmqpTest {
             Thread.sleep(20);
         }
     }
+
+    //广播模式
+    @Test
+    public void testFanoutExchange() {
+        // 队列名称
+        String exchangeName = "tangbingxing.fanout";
+        // 消息
+        String message = "hello, everyone!";
+        rabbitTemplate.convertAndSend(exchangeName, "", message);
+    }
 }
