@@ -80,4 +80,15 @@ public class SpringRabbitListener {
     public void listenTopicQueue2(String msg){
         System.out.println("消费者接收到topic.queue2的消息：【" + msg + "】");
     }
+
+    /**
+     * 测试消费者 消费失败时造成死信
+     * @param msg
+     */
+    @RabbitListener(queues = "simple.queue")
+    public void deadLetterListener(String msg){
+        System.out.println("消息：" + msg);
+        // 故意报错，造成死信
+        int i = 1/0;
+    }
 }

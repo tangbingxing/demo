@@ -76,4 +76,10 @@ public class SpringAmqpTest {
         // 发送消息
         rabbitTemplate.convertAndSend(exchangeName, "china.news", message);
     }
+
+    //测试死信消息
+    @Test
+    public void testSendMsgForDeadLetter(){
+        rabbitTemplate.convertAndSend("simple.queue", "dead letter test");
+    }
 }
