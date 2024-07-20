@@ -1,5 +1,6 @@
 package com.tangbingxing.listener;
 
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.amqp.core.ExchangeTypes;
 import org.springframework.amqp.rabbit.annotation.Exchange;
 import org.springframework.amqp.rabbit.annotation.Queue;
@@ -17,6 +18,7 @@ import java.time.LocalTime;
  * @Created by m1346
  */
 @Component
+@Slf4j
 public class SpringRabbitListener {
     @RabbitListener(queues = "simple.queue")
     public void listenSimpleQueueMessage(String msg) {
@@ -90,5 +92,11 @@ public class SpringRabbitListener {
         System.out.println("消息：" + msg);
         // 故意报错，造成死信
         int i = 1/0;
+    }
+
+    //测试ttl死信消费者
+    @RabbitListener(queues="dl.ttl.queue")
+    public void listenDlQueue(String msg){
+        log.info("接收到 dl.ttl.queue的延迟消息：{}", msg);
     }
 }

@@ -1,11 +1,17 @@
 package com.tangbingxing;
 
+import lombok.extern.slf4j.Slf4j;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.springframework.amqp.core.Message;
+import org.springframework.amqp.core.MessageBuilder;
+import org.springframework.amqp.core.MessageDeliveryMode;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
+
+import java.nio.charset.StandardCharsets;
 
 /**
  * @Classname SpringAmqpTest
@@ -16,6 +22,7 @@ import org.springframework.test.context.junit4.SpringRunner;
  */
 @RunWith(SpringRunner.class)
 @SpringBootTest
+@Slf4j
 public class SpringAmqpTest {
     @Autowired
     private RabbitTemplate rabbitTemplate;
@@ -81,5 +88,33 @@ public class SpringAmqpTest {
     @Test
     public void testSendMsgForDeadLetter(){
         rabbitTemplate.convertAndSend("simple.queue", "dead letter test");
+    }
+
+    //测试队列延迟
+    @Test
+    public void testTTLQueue() {
+        // 创建消息
+        String message = "hello, ttl queue";
+        // 发送消息
+        rabbitTemplate.convertAndSend("ttl.direct", "ttl", message);
+        // 记录日志
+        log.debug("发送消息成功");
+    }
+
+
+    //测试消息延迟
+    @Test
+    public void testTTLMsg() {
+        // 创建消息
+        String message = "hello, ttl msg";
+        Message msg = MessageBuilder.withBody(message.getBytes(StandardCharsets.UTF_8))
+                .setDeliveryMode(MessageDeliveryMode.PERSISTENT)
+                // 字符串5000 = 5s -> 队列10s, 消息是5s
+                .setExpiration("5000")
+                .build();
+        // 发送消息
+        rabbitTemplate.convertAndSend("ttl.direct", "ttl", msg);
+        // 记录日志
+        log.debug("发送消息成功");
     }
 }
