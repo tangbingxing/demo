@@ -25,3 +25,12 @@
 - 1）创建Request对象。这次是DeleteIndexRequest对象
 - 2）准备参数。这里是无参
 - 3）发送请求。改用delete方法
+
+## 判断索引库是否存在
+
+在hotel-demo中的HotelIndexTest测试类中，编写单元测试，实现判断索引库是否存在
+
+代码分为三步：
+- 1）创建Request对象。这次是GetIndexRequest对象
+- 2）准备参数。这里是无参
+- 3）发送请求。改用exists方法
