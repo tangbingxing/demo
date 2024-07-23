@@ -5,4 +5,4 @@
 |------------|---------------|
 | redis-demo | redis入门-jedis |
 | mq-demo    | rabbitmq入门    |
-|            |               |
+| hotel-demo | es入门案例        |
