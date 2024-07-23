@@ -42,11 +42,11 @@ class HotelDocumentTest {
     @Test
     void testBulkRequest() throws IOException {
     }
-
+    //todo 连接es数据库
     @BeforeEach
     void setUp() {
         client = new RestHighLevelClient(RestClient.builder(
-                HttpHost.create("http://localhost:9200")
+                HttpHost.create("http://10.147.18.147:9200")
         ));
     }
 
